@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Choices Matter</title>
+	<!---<link rel="stylesheet" href="css/foundation.css">-->
+</head>
+
+<body>
+
+    <h1>Getting user data</h1>
+  
+    
+
+    <p>Choice 1</p>
+    <button type="button" button id="btnA" name="A" onclick="recordDataA()">A</button>
+    <br>
+    <p>Choice 2</p>
+    <button type="button" button id="btnB" name="B" onclick="recordDataB()">B</button>
+    <br>
+    <p>Choice 3</p>
+    <button type="button" button id="btnC" name="C" onclick="recordDataC()">C</button>
+    
+
+    <p id="A"></p>
+    <p>
+        Button Clicked <span id="displayA">0</span> Times
+    </p>
+    <p id="B"></p>
+    <p>
+        Button Clicked <span id="displayB">0</span> Times
+    </p>
+    <p id="C"></p>
+    <p>
+        Button Clicked <span id="displayC">0</span> Times
+    </p>
+
+    <!--Need to do a POST here for the data -->
+    <div>
+        <canvas id="barChart"></canvas> 
+    </div>
+    <!--Need to do a GET here to retrieve the data so i can create my bar chart-->
+    <div>
+        <button type="button" class="btn btn-success btn-md" onclick="toggleChart();">Toggle Chart </button>
+    </div>
+
+    <script>
+        var countA = 0;
+        var countB = 0;
+        var countC = 0;
+        var btna = document.getElementById("btnA");
+        var btnb = document.getElementById("btnB");
+        var btnC = document.getElementById("btnC");
+        var dispA = document.getElementById("displayA");
+        var dispB = document.getElementById("displayB");
+        var dispC = document.getElementById("displayC");
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.min.js"></script> 
+    <script type="text/javascript">
+        
+        var input = new Array(4, 6, 10);
+        var canvas = document.getElementById("barChart");
+        var ctx = canvas.getContext('2d');
+        var myBarChart;
+        var chartType = 'bar';
+        Chart.defaults.global.defaultFontColor = 'grey';
+        Chart.defaults.global.defaultFontSize = 16;
+        var data = {
+            
+            labels: ["A", "B", "C"],
+            datasets: [{
+                label: "Most picked Choices",
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: "rgba(0,255,0,0.4)",
+                borderColor: "red", // The main line color
+                borderCapStyle: 'square',
+                pointBorderColor: "white",
+                pointBackgroundColor: "green",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "yellow",
+                pointHoverBorderColor: "green",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                data: input,  
+                spanGaps: true,
+            }]
+        };
+
+        var options = {
+            scales: {
+                yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+                }]
+            },
+        };
+
+        function recordDataA(){
+            countA++;
+            dispA.innerHTML = countA;
+            
+        }
+        function recordDataB(){
+            countB++;
+            dispB.innerHTML = countB;
+            
+        }
+        function recordDataC(){
+            countC++;
+            dispC.innerHTML = countC;
+            
+        }
+        function createGraph() {
+        myBarChart = new Chart(ctx, {
+            type: chartType,
+            data: data,
+            options: options
+        });
+        }
+        function toggleChart() {
+        
+        createGraph();
+        }
+    </script>    
+    
+</body>
+
+
+</html>
